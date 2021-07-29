@@ -11,17 +11,16 @@
 
     <ListView
         android:id="@+id/allNotesListView"
-        android:layout_width="306dp"
-        android:layout_height="543dp"
+        android:layout_width="313dp"
+        android:layout_height="449dp"
         android:layout_marginStart="73dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="68dp"
         android:layout_marginEnd="73dp"
-        android:layout_marginBottom="84dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notesText" />
+        app:layout_constraintTop_toBottomOf="@+id/notesText"
+        app:layout_constraintVertical_bias="0.193" />
 
     <TextView
         android:id="@+id/notesText"

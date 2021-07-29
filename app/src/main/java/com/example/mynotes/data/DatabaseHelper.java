@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 import com.example.mynotes.model.Note;
 import com.example.mynotes.util.Util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(@Nullable @org.jetbrains.annotations.Nullable Context context) {
         super(context, Util.DATABASE_NAME, null, Util.DATABASE_VERSION);
@@ -59,6 +62,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else{
             return false;
         }
+    }
+
+    public List<Note> fetchAllNotes (){
+        List<Note> userList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectAll = " SELECT * FROM " + Util.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectAll, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Note note = new Note();
+                note.setNote_id(cursor.getInt(0));
+                note.setNote(cursor.getString(1));
+
+                userList.add(note);
+
+            } while (cursor.moveToNext());
+
+        }
+
+        return userList;
+    }
+
+    public int updateNote(Note note)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Util.NOTE, note.getNote());
+
+        return db.update(Util.TABLE_NAME, contentValues,
+                Util.NOTE + "=?", new String[]{String.valueOf(note.getNote())});
+
+    }
+
+    //TEST
+    public int deleteNote(Note note){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Util.NOTE, note.getNote());
+
+        return db.delete(Util.TABLE_NAME, Util.NOTE,
+                new String[]{String.valueOf(note.getNote())});
     }
 
 }
