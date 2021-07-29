@@ -47,11 +47,11 @@ public class AllNotesActivity extends AppCompatActivity {
 
                 //create a new intent from activity and to activity
                 Intent intent = new Intent(AllNotesActivity.this, UpdateNoteActivity.class);
-                //Add a name for the intent and pass in the position  ///***position for intent to note item?
+                //Add a name for the intent and pass in the position
                 intent.putExtra("noteItem", allNotesListView.getItemAtPosition(position).toString());
-                //START NEW ACTIVITY use for result to maintain activity lifecycle
+                //Start note item activity
                 startActivity(intent);
-//                startActivityForResult(intent, RESULT_FIRST_USER);
+
             }
         });
 
