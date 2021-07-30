@@ -93,8 +93,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(Util.NOTE, note.getNote());
 
         return db.update(Util.TABLE_NAME, contentValues,
-                Util.NOTE + "=?", new String[]{String.valueOf(note.getNote())});
+                Util.NOTE_ID + "=?",
+                new String[]{String.valueOf(note.getNote_id())});
 
+            //changes to .update whereArgs? --> use NOTE_ID & getNoteId ??**
     }
 
     //TEST
@@ -104,7 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(Util.NOTE, note.getNote());
 
         return db.delete(Util.TABLE_NAME, Util.NOTE,
-                new String[]{String.valueOf(note.getNote())});
+                new String[]{String.valueOf(note.getNote())}); //ID TOO??
     }
 
 }
