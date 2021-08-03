@@ -86,27 +86,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return userList;
     }
 
-    public int updateNote(Note note)
+    public int updateNote(Integer noteId, String noteText)
     {
+        Log.i("NOTE", "updateNote: " + noteId);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Util.NOTE, note.getNote());
+        contentValues.put(Util.NOTE, noteText);
 
         return db.update(Util.TABLE_NAME, contentValues,
                 Util.NOTE_ID + "=?",
-                new String[]{String.valueOf(note.getNote_id())});
-
-            //changes to .update whereArgs? --> use NOTE_ID & getNoteId ??**
+                new String[]{String.valueOf(noteId)});
     }
 
     //TEST
-    public int deleteNote(Note note){
+    public int deleteNote(Integer noteId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Util.NOTE, note.getNote());
+        contentValues.remove(Util.NOTE_ID);
 
-        return db.delete(Util.TABLE_NAME, Util.NOTE,
-                new String[]{String.valueOf(note.getNote())}); //ID TOO??
+        return db.delete(Util.TABLE_NAME, Util.NOTE_ID,
+                new String[]{String.valueOf(noteId)});
     }
 
 }

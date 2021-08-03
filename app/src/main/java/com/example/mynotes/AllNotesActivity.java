@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,10 +46,15 @@ public class AllNotesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                //Cast position to Note object
+                Note selectedNote = (Note) userList.get(position);
+
                 //create a new intent from activity and to activity
                 Intent intent = new Intent(AllNotesActivity.this, UpdateNoteActivity.class);
-                //Add a name for the intent and pass in the position
-                intent.putExtra("noteItem", allNotesListView.getItemAtPosition(position).toString());
+
+                //Pass in note obj id and text to intent
+                intent.putExtra("noteItemID", selectedNote.getNote_id());
+                intent.putExtra("noteItemText", selectedNote.getNote());
                 //Start note item activity
                 startActivity(intent);
 

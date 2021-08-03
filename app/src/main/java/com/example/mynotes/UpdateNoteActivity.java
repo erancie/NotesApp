@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +19,7 @@ public class UpdateNoteActivity extends AppCompatActivity {
     //declarations
     EditText noteItem;
     Button editNoteButton, deleteNoteButton;
-
+    Note selectedNote;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,18 +32,20 @@ public class UpdateNoteActivity extends AppCompatActivity {
         //declare db
         DatabaseHelper db = new DatabaseHelper(this);
         //get note selected from listview intent
-        String noteText = getIntent().getStringExtra("noteItem");
+        //Azadeh add this part
+        String noteText = getIntent().getStringExtra("noteItemText");
+        int noteId = getIntent().getIntExtra("noteItemID",
+                0);
         //set EditText field with Note item String
         noteItem.setText(noteText);
-
         //create Note obj using fetchNote method???
 
         //TODO
         //click listener for edit button
 
-            //get edited text
+        //get edited text
 
-            //call db update method
+        //call db update method
 
         /////////////////////////////////////////TODO
         editNoteButton.setOnClickListener(new View.OnClickListener() {
@@ -55,18 +58,20 @@ public class UpdateNoteActivity extends AppCompatActivity {
 
 //                if (password.equals(confirmPassword))
 //                {
-                    int updateRow  = db.updateNote(new Note(noteItem.toString()));
-                    if (updateRow > 0)
-                    {
-                        Toast.makeText(UpdateNoteActivity.this, "Note Updated.", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        Toast.makeText(UpdateNoteActivity.this, "No row found!", Toast.LENGTH_SHORT).show();
-                    }
+                //Azadeh add this part
+                String newNote = noteItem.getText().toString();
+                int updateRow  = db.updateNote(noteId, newNote);
+                if (updateRow > 0)
+                {
+                    Toast.makeText(UpdateNoteActivity.this, "Note Updated.", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(UpdateNoteActivity.this, "No row found!", Toast.LENGTH_SHORT).show();
+                }
 
-                    Intent intent = new Intent(UpdateNoteActivity.this, AllNotesActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent(UpdateNoteActivity.this, AllNotesActivity.class);
+                startActivity(intent);
 //                }
 //                else
 //                {
@@ -75,29 +80,27 @@ public class UpdateNoteActivity extends AppCompatActivity {
             }
         });
 
-//        //click listener for delete button //TODO
-//        deleteNoteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                int deleteRow  = db.deleteNote(new Note(noteItem.toString()));
-//                if (deleteRow > 0)
-//                {
-//                    Toast.makeText(UpdateNoteActivity.this, "Note Deleted.", Toast.LENGTH_SHORT).show();
-//                }
-//                else
-//                {
-//                    Toast.makeText(UpdateNoteActivity.this, "No row found!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            //create a new intent from activity and to activity
-//            Intent intent = new Intent(UpdateNoteActivity.this, AllNotesActivity.class);
-//            //Add a name for the intent and pass in the position
-////                intent.putExtra("noteItem", allNotesListView.getItemAtPosition(position).toString());
-//            //Start note item activity
-//            startActivity(intent);
-//        });
-            //get note for deletion** --> NOTE_ID?
-            //call db delete method
+        //click listener for delete button //TODO
+        deleteNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int deleteRow  = db.deleteNote(noteId);
+                if (deleteRow > 0)
+                {
+                    Toast.makeText(UpdateNoteActivity.this, "Note Deleted.", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(UpdateNoteActivity.this, "No row found!", Toast.LENGTH_SHORT).show();
+                }
+                //create a new intent from activity and to activity
+                Intent intent = new Intent(UpdateNoteActivity.this, AllNotesActivity.class);
+
+                startActivity(intent);
+            }
+
+        });
+
     }
 }
