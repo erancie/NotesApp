@@ -38,27 +38,13 @@ public class UpdateNoteActivity extends AppCompatActivity {
                 0);
         //set EditText field with Note item String
         noteItem.setText(noteText);
-        //create Note obj using fetchNote method???
 
-        //TODO
-        //click listener for edit button
-
-        //get edited text
-
-        //call db update method
 
         /////////////////////////////////////////TODO
         editNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-//                String note = sUsernameEditText2.getText().toString();
-//                String password = sPasswordEditText2.getText().toString();
-//                String confirmPassword = confirmPasswordEditText2.getText().toString();
-
-//                if (password.equals(confirmPassword))
-//                {
-                //Azadeh add this part
                 String newNote = noteItem.getText().toString();
                 int updateRow  = db.updateNote(noteId, newNote);
                 if (updateRow > 0)
@@ -69,24 +55,18 @@ public class UpdateNoteActivity extends AppCompatActivity {
                 {
                     Toast.makeText(UpdateNoteActivity.this, "No row found!", Toast.LENGTH_SHORT).show();
                 }
-
                 Intent intent = new Intent(UpdateNoteActivity.this, AllNotesActivity.class);
                 startActivity(intent);
-//                }
-//                else
-//                {
-//                    Toast.makeText(ChangePasswordActivity.this, "Two passwords do not match!", Toast.LENGTH_SHORT).show();
-//                }
             }
         });
 
-        //click listener for delete button //TODO
+        //click listener for delete button
         deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int deleteRow  = db.deleteNote(noteId);
-                if (deleteRow > 0)
+                boolean deleteRow  = db.deleteNote(noteId);
+                if (deleteRow == true)
                 {
                     Toast.makeText(UpdateNoteActivity.this, "Note Deleted.", Toast.LENGTH_SHORT).show();
                 }
@@ -96,7 +76,6 @@ public class UpdateNoteActivity extends AppCompatActivity {
                 }
                 //create a new intent from activity and to activity
                 Intent intent = new Intent(UpdateNoteActivity.this, AllNotesActivity.class);
-
                 startActivity(intent);
             }
 

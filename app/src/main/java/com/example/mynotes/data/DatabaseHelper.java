@@ -98,14 +98,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(noteId)});
     }
 
-    //TEST
-    public int deleteNote(Integer noteId){
+    public boolean deleteNote(Integer noteId){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.remove(Util.NOTE_ID);
-
-        return db.delete(Util.TABLE_NAME, Util.NOTE_ID,
-                new String[]{String.valueOf(noteId)});
+        return db.delete(Util.TABLE_NAME, Util.NOTE_ID + "=?",
+                new String[]{String.valueOf(noteId)}) > 0;
     }
-
 }
